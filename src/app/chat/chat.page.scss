@@ -1,0 +1,61 @@
+.modal-wrapper {
+  padding: 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.section {
+  margin: 15px 0;
+}
+
+.my-code {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.other-code {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 25px 0;
+}
+
+.digit {
+  width: 80%;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  font-size: 24px;
+  padding: 5px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.cancel {
+  color: gray;
+  background: none;
+  border: none;
+  font-size: 16px;
+}
+
+.submit {
+  color: #1E88E5;
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+}

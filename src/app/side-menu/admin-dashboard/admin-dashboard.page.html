@@ -1,0 +1,205 @@
+<ion-content class="ion-padding">
+
+  <!-- TITLE + PROFILE -->
+ <!-- TITLE + PROFILE -->
+<div class="title-row">
+  <h2 class="page-title">Admin Dashboard</h2>
+  <ion-avatar class="profile-avatar">
+    <img src="https://i.pravatar.cc/150?img=3" />
+  </ion-avatar>
+</div>
+
+
+  <p style="color: #666; margin-bottom: 28px;">
+    Manage item listings and user accounts.
+  </p>
+
+  <!-- TABS -->
+  <ion-segment value="users" (ionChange)="segmentChanged($event)" style="margin-bottom: 20px;">
+    <ion-segment-button value="approvals">
+      <ion-label>Item Approvals</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="users">
+      <ion-label>User Management</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- ITEM APPROVALS -->
+  <div *ngIf="selectedSegment === 'approvals'">
+    <h4 style="font-weight: 600; margin: 20px 0 10px;">Pending Item Listings</h4>
+    <p style="color: #777; margin-bottom: 16px;">Review and approve or reject new item submissions.</p>
+
+    <div class="header-row">
+      <span>Item</span>
+      <span>Location</span>
+      <span>Date Found</span>
+      <span>Reported by</span>
+      <span>Status</span>
+      <span class="actions-header">Actions</span>
+    </div>
+
+    <div class="item-card" *ngFor="let item of pendingItems">
+      <span><strong>{{item.itemName}}</strong></span>
+      <span>{{item.location}}</span>
+      <span>{{item.date}}</span>
+      <span>{{item.reportedBy}}</span>
+      <span>
+        <ion-badge
+          [color]="item.status === 'pending' ? 'medium' : (item.status === 'approved' ? 'success' : 'danger')">
+          {{item.status | titlecase}}
+        </ion-badge>
+      </span>
+      <span class="actions-col" *ngIf="item.status === 'pending'">
+        <ion-button fill="clear" color="success" size="small" (click)="approveItem(item)">
+          <ion-icon name="checkmark"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" color="danger" size="small" (click)="rejectItem(item)">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+      </span>
+    </div>
+  </div>
+
+  <!-- USER MANAGEMENT -->
+  <div *ngIf="selectedSegment === 'users'">
+    <h4 style="font-weight: 600; margin: 20px 0 10px;">User Accounts</h4>
+    <p style="color: #777; margin-bottom: 16px;">View and manage all user accounts on the platform.</p>
+
+    <div class="header-row">
+      <span>Name</span>
+      <span>Email</span>
+      <span>Role</span>
+      <span>Status</span>
+      <span class="actions-header">Actions</span>
+    </div>
+
+    <div class="user-card" *ngFor="let user of users">
+      <span><strong>{{user.name}}</strong></span>
+      <span>{{user.email}}</span>
+      <span>
+        <ion-badge [color]="user.role === 'Admin' ? 'warning' : 'medium'">{{user.role}}</ion-badge>
+      </span>
+      <span>
+        <ion-badge [color]="user.status === 'Active' ? 'success' : 'danger'">{{user.status}}</ion-badge>
+      </span>
+      <span class="actions-col">
+        <ion-button fill="clear" size="small" (click)="openPopover($event, user)">
+          <ion-icon name="ellipsis-vertical"></ion-icon>
+        </ion-button>
+      </span>
+    </div>
+  </div>
+
+  <!-- FIXED POPOVER -->
+  <ion-popover #actionPopover [dismissOnSelect]="true">
+    <ng-template>
+      <div class="popover-content">
+        <ion-list lines="none">
+          <!-- SUSPEND USER -->
+          <ion-item *ngIf="selectedUser?.status === 'Active'" button (click)="suspendUser()">
+            <ion-icon name="ban-outline" color="danger" slot="start"></ion-icon>
+            <ion-label>Suspend User</ion-label>
+          </ion-item>
+          <!-- REMOVE SUSPENSION -->
+          <ion-item *ngIf="selectedUser?.status === 'Suspended'" button (click)="removeSuspension()">
+            <ion-icon name="checkmark-circle-outline" color="success" slot="start"></ion-icon>
+            <ion-label>Remove Suspension</ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ng-template>
+  </ion-popover>
+
+
+
+
+  <!-- ============================
+          STYLES
+  ============================ -->
+  <!-- GRID TABLE STYLES -->
+<style>
+  .header-row,
+  .item-card,
+  .user-card {
+    display: grid;
+    /* 6 columns now: Item | Location | Date Found | Reported by | Status | Actions */
+    grid-template-columns: 2.3fr 3fr 1.7fr 1.7fr 1fr 1fr;
+    align-items: center;
+    padding: 14px 16px;
+    background: white;
+    font-size: 14px;
+  }
+
+  .header-row {
+    background: #f0f2f5;
+    font-weight: 600;
+    font-size: 13.5px;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 2px;
+  }
+
+  .actions-header,
+  .actions-col {
+    text-align: right;
+  }
+
+  .item-card,
+  .user-card {
+    border-bottom: 1px solid #eee;
+  }
+
+  ion-button {
+    height: 28px;
+    --padding-start: 0;
+    --padding-end: 0;
+  }
+
+  ion-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+  }
+
+  /* POPOVER STYLE FIX */
+  .popover-content {
+    --padding-start: 0;
+    --padding-end: 0;
+    --background: #fff;
+  }
+
+  ion-item {
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+
+  ion-icon {
+    font-size: 18px;
+  }
+
+  /* Title + Profile */
+.title-row {
+  display: flex;
+  align-items: center;        /* vertically center both title & avatar */
+  justify-content: space-between; /* push avatar to the right */
+  margin: 16px 0 10px;
+  gap: 12px;                  /* optional: small space if avatar overlaps on small screens */
+}
+
+.page-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;           /* ensure title height doesn’t push avatar */
+}
+
+.profile-avatar {
+  width: 40px;
+  height: 40px;
+  --border-radius: 50%;
+  flex-shrink: 0;             /* prevent shrinking on small screens */
+}
+
+</style>
+
+
+</ion-content>

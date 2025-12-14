@@ -1,0 +1,114 @@
+<ion-split-pane contentId="main">
+
+  <!-- LEFT SIDE MENU -->
+  <ion-menu contentId="main" side="start" class="slim-menu">
+    <ion-content class="ion-padding">
+
+      <div class="logo-container">
+        <img src="assets/Applogo-home.png" alt="BalikSayo Kampus" class="app-logo" />
+      </div>
+
+      <ion-list lines="none" class="menu-list">
+
+        <!-- Browse Items -->
+        <ion-menu-toggle auto-hide="false">
+          <ion-item
+            button
+            class="menu-item"
+            lines="none"
+            routerLink="/side-menu/browse-items"
+            routerDirection="root">
+            <ion-icon name="search-outline" slot="start"></ion-icon>
+            <ion-label>Browse Items</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <!-- Claimed Items -->
+        <ion-menu-toggle auto-hide="false">
+          <ion-item
+            button
+            class="menu-item"
+            lines="none"
+            routerLink="/side-menu/claimed-items"
+            routerDirection="root">
+            <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+            <ion-label>Claimed Items</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <!-- Admin Dashboard -->
+        <ion-menu-toggle auto-hide="false">
+          <ion-item
+            button
+            class="menu-item"
+            lines="none"
+            routerLink="/side-menu/admin-dashboard"
+            routerDirection="root">
+            <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
+            <ion-label>Admin Dashboard</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+      </ion-list>
+
+    </ion-content>
+  </ion-menu>
+
+  <!-- RIGHT SIDE CONTENT -->
+  <ion-router-outlet id="main"></ion-router-outlet>
+
+</ion-split-pane>
+
+<style>
+ .slim-menu {
+  --width: 240px !important;
+  --min-width: 240px;
+  --max-width: 270px;
+  --background: #ffffff;
+  --border: none !important;
+}
+
+ion-split-pane {
+  --border: 0 !important;
+  --side-border-width: 0 !important;
+}
+
+.logo-container {
+  text-align: center;
+  padding: 40px 0 50px;
+}
+
+.app-logo {
+  width: 140px;
+}
+
+.menu-list {
+  padding: 0 12px;
+}
+
+.menu-item {
+  --border-radius: 16px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  height: 50px;
+  margin-bottom: 10px;
+  font-size: 15.5px;
+}
+
+.menu-item.active {
+  --background: #fff0e0;
+  --color: #e67e22;
+  font-weight: 700;
+}
+
+.menu-item ion-icon {
+  font-size: 20px;
+  margin-right: 14px;
+}
+
+@media (max-width: 768px) {
+  .slim-menu {
+    --width: 280px;
+  }
+}
+</style>

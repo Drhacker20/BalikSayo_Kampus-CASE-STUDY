@@ -1,0 +1,205 @@
+<ion-content class="main-content">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>Found Items</h1>
+    <p>Browse items that have been found around campus.</p>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-bar">
+
+    <ion-button fill="clear" size="small" class="filter-toggle">
+      <ion-icon name="funnel-outline"></ion-icon> FILTERS
+    </ion-button>
+
+    <!-- Category Filter -->
+    <ion-select
+      interface="popover"
+      placeholder="Category"
+      class="compact-select"
+      [(ngModel)]="selectedCategory"
+      (ngModelChange)="filterItems()">
+      <ion-select-option value="all">All Categories</ion-select-option>
+      <ion-select-option value="electronics">Electronics</ion-select-option>
+      <ion-select-option value="books">Books</ion-select-option>
+      <ion-select-option value="accessories">Accessories</ion-select-option>
+      <ion-select-option value="clothing">Clothing</ion-select-option>
+      <ion-select-option value="keys">Keys</ion-select-option>
+      <ion-select-option value="other">Other</ion-select-option>
+    </ion-select>
+
+    <!-- Location Filter -->
+    <ion-select
+      interface="popover"
+      placeholder="Location"
+      class="compact-select"
+      [(ngModel)]="selectedLocation"
+      (ngModelChange)="filterItems()">
+      <ion-select-option value="all">All Locations</ion-select-option>
+      <ion-select-option value="Library">Library</ion-select-option>
+      <ion-select-option value="Gym">Gym</ion-select-option>
+      <ion-select-option value="Student Union">Student Union</ion-select-option>
+      <ion-select-option value="Canteen">Canteen</ion-select-option>
+      <ion-select-option value="Parking Lot">Parking Lot</ion-select-option>
+      <ion-select-option value="Hallway">Hallway</ion-select-option>
+    </ion-select>
+
+    <span class="clear-filters" (click)="clearFilters()">CLEAR FILTERS</span>
+  </div>
+
+  <!-- Items Grid -->
+  <div class="items-grid">
+    <div class="item-card" *ngFor="let item of items">
+      
+      <!-- Item Image -->
+      <img 
+        [src]="item.photo || 'assets/placeholder.png'" 
+        alt="{{ item.itemName }}"
+        class="item-image"
+      />
+
+      <div class="card-content">
+        <h2 class="item-name">{{ item.itemName }}</h2>
+
+        <div class="item-meta">
+
+          <div class="meta-row">
+            <ion-icon name="pricetag-outline"></ion-icon>
+            <span>{{ item.type }}</span>
+          </div>
+
+          <div class="meta-row">
+            <ion-icon name="location-outline"></ion-icon>
+            <span>{{ item.location }}</span>
+          </div>
+
+          <div class="meta-row">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <span>Found on {{ item.displayDate }}</span>
+          </div>
+
+          <!-- ⭐ Reported By -->
+          <div class="meta-row">
+            <ion-icon name="person-outline"></ion-icon>
+           <span>Reported by {{ item.reportedByName || item.reportedBy }}</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</ion-content>
+
+
+
+<style>
+  .main-content {
+    --background: #fdfdfd;
+    --padding-start: 40px;
+    --padding-end: 40px;
+    --padding-top: 30px;
+    --padding-bottom: 40px;
+  }
+
+  .header h1 {
+    font-size: 34px;
+    font-weight: 800;
+    color: #222;
+    margin: 0 0 6px 0;
+  }
+
+  .header p {
+    color: #777;
+    font-size: 15.5px;
+    margin: 0;
+  }
+
+  .filters-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 28px 0 32px 0;
+    flex-wrap: wrap;
+  }
+
+  .filter-toggle {
+    --color: #555;
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .compact-select {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    height: 40px;
+    min-width: 150px;
+    max-width: 190px;
+    --padding-start: 14px;
+    --padding-end: 10px;
+    font-size: 14px;
+  }
+
+  .clear-filters {
+    margin-left: auto;
+    color: #aaa;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    cursor: pointer;
+  }
+
+  .items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 26px;
+  }
+
+  .item-card {
+    background: white;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+    transition: transform 0.2s ease;
+  }
+
+  .item-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .item-image {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+  }
+
+  .card-content { padding: 22px; }
+
+  .item-name {
+    font-size: 19px;
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    color: #1a1a1a;
+  }
+
+  .item-meta { display: flex; flex-direction: column; gap: 11px; }
+
+  .meta-row {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-size: 13.8px;
+    color: #666;
+  }
+
+  .meta-row ion-icon {
+    font-size: 17px;
+    color: #aaa;
+  }
+</style>

@@ -1,0 +1,7 @@
+{
+  "name": "baliksayo",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
